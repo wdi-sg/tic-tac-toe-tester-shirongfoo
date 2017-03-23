@@ -60,36 +60,33 @@
 
 $(document).ready(function () {
   restart()
-  isGameOver()
+
   var $container = $('.container')
   var $boxArray = $container.find('.box')
 
   $boxArray.on('click', function (e) {
     var box = (e.target)
     var playTurnResult = playTurn($boxArray.index(e.target)) // index for playturn is the indexOf the box array
-    console.log(playTurnResult)
+
     if (!playTurnResult) {
       alert('cannot click')
-    } else {
+
+    }
+    else {
       var symbolNum = grid[($boxArray.index(e.target))]
       if (symbolNum === 1) {
         box.textContent = 'X'
-      } else {
+      }
+      else {
         box.textContent = 'O'
       }
+      isGameOver()
+      if(isGameOver()){
+        alert('Game Over')
+           restart()
+      }
     }
-    // box.textContent = grid[$boxArray.index(e.target)]
-    // var resultOfWhoWon = whoWon()
-    // if (resultOfWhoWon != 0) {
-    //   console.log(resultOfWhoWon)
-    //   restart()
-    // }
-    // 
-    // console.log(whoWon())
-    // console.log(isGameOver())
-    // if (whoWon() === 1 || whoWon() === 2 || whoWon() === 3) {
-    //   restart()
-    // }
+
   })
 
   var grid = [null, null, null, null, null, null, null, null, null]
@@ -129,6 +126,8 @@ $(document).ready(function () {
   //
   function restart () {
     grid = [null, null, null, null, null, null, null, null, null]
+    $grid = $('.grid')
+    $grid.children().text('')
     player = 1
   }
 }) // end of document.ready function
