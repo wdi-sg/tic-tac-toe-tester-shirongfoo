@@ -1,0 +1,30 @@
+*{
+  box-sizing: border-box;
+}
+.container{
+  margin: 0 auto;
+  max-width: 800px;
+  width: 90%;
+  background-color: red;
+
+}
+
+.grid{
+  width: 50%;
+  margin: 0 auto;
+  background-color: yellow;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.box{
+  width: 30%;
+  height: 100px;
+  border: 2px solid black;
+  padding: 10px;
+  background-color: blue;
+  font-size: 80px;
+  text-align: center;
+}
