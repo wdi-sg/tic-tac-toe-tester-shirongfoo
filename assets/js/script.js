@@ -59,38 +59,37 @@
 // button.addEventListener('click', printAllNames)
 
 $(document).ready(function () {
-  restart()
-
   var $container = $('.container')
   var $boxArray = $container.find('.box')
+  var $restartButton = $('.restart')
+  var player = 2
+  var grid = [null, null, null, null, null, null, null, null, null]
 
   $boxArray.on('click', function (e) {
-    var box = (e.target)
-    var playTurnResult = playTurn($boxArray.index(e.target)) // index for playturn is the indexOf the box array
 
-    if (!playTurnResult) {
-      alert('cannot click')
+    var box = e.target
+    var index = $boxArray.index(e.target)
 
-    }
-    else {
-      var symbolNum = grid[($boxArray.index(e.target))]
-      if (symbolNum === 1) {
+    playTurnResult = playTurn(index)
+    updateGrid(box)
+    isGameOver()
+  }) // end of on click boxArray
+
+  $restartButton.on('click', restart)
+
+  function updateGrid (box) {
+    if (playTurnResult) {
+      console.log(player)
+      if(player === 1){
         box.textContent = 'X'
-      }
-      else {
+      } else {
         box.textContent = 'O'
       }
-      isGameOver()
-      if(isGameOver()){
-        alert('Game Over')
-           restart()
-      }
+
+    } else {
+      console.log('cannot')
     }
-
-  })
-
-  var grid = [null, null, null, null, null, null, null, null, null]
-  var player = 1
+  }
   function playTurn (index) {
     if (grid[index] || isGameOver()) {
       return false
@@ -101,15 +100,17 @@ $(document).ready(function () {
       return true
     }
   }
-  //
   function isGameOver () {
-    if (whoWon()) {
-      console.log('Game is Over')
+    if (whoWon() === 1 || whoWon() === 2) {
+      alert('player ' + player + ' has won')
       return true
+    } else if(whoWon()===3){
+      alert("it's a tie")
+      return true
+    } else {
+      return false
     }
-    return false
   }
-  //
   function whoWon () {
     if (grid[0] && grid[0] === grid[1] && grid[0] === grid[2]) return grid[0]
     if (grid[3] && grid[3] === grid[4] && grid[3] === grid[5]) return grid[3]
@@ -120,10 +121,10 @@ $(document).ready(function () {
     if (grid[0] && grid[0] === grid[4] && grid[0] === grid[8]) return grid[0]
     if (grid[2] && grid[2] === grid[4] && grid[2] === grid[6]) return grid[2]
     if (grid[0] && grid[1] && grid[2] && grid[3] && grid[4] &&
-      grid[5] && grid[6] && grid[7] && grid[8]) return 3
+          grid[5] && grid[6] && grid[7] && grid[8]) return 3
     return 0
   }
-  //
+
   function restart () {
     grid = [null, null, null, null, null, null, null, null, null]
     $grid = $('.grid')
